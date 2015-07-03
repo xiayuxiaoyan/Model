@@ -30,6 +30,7 @@ public class NewsController extends BaseController{
 	
 	//github测试，2015年7月3日21:51:36
 	//github测试2，2015年7月3日22:17:13
+	//github测试3，2015年7月3日22:38:42
 	
 	//添加新闻
 	@RequestMapping("/add")
