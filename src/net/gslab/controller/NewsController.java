@@ -28,6 +28,8 @@ public class NewsController extends BaseController{
 	@Resource(name="newsServiceImpl")
 	private NewsService newsService;
 	
+	//github测试，2015年7月3日21:51:36
+	
 	
 	//添加新闻
 	@RequestMapping("/add")
