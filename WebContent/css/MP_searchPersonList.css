@@ -1,0 +1,12 @@
+.tb{
+    /*background-color: #FFFFFF;*/
+}
+.tb th{
+    height: 20px;
+}
+body{
+    width:760px;
+    height:600px;
+    margin:0 auto;
+    padding-left: 40px;
+}
