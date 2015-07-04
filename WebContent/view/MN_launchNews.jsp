@@ -16,6 +16,7 @@
     <script src="js/jHtmlArea.ColorPickerMenu-0.8.min.js"></script>
     <link href="css/textEditor/jHtmlArea.ColorPickerMenu.css" rel="stylesheet" type="text/css"/>
     <link  rel="stylesheet" type="text/css" href="css/MN_launchNews.css"/>
+    
     <div>
     <form id="lanuch_News" action="/userRegister" method="post">
         <h3>&nbsp所属分类： &nbsp&nbsp &nbsp&nbsp
@@ -27,13 +28,13 @@
     </div>
     <div>
         <h3> &nbsp&nbsp标题:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<input style="width: 300px;" name="title">
+		<input style="width: 300px;" name="newsName">
         </h3>
 
     </div>
     <div>
-        <h3> 页面关键字:&nbsp&nbsp&nbsp&nbsp&nbsp
-        <input style="width: 300px;" name="keywords">
+        <h3> 发布人姓名:&nbsp&nbsp&nbsp&nbsp&nbsp
+        <input style="width: 300px;" name="publishName">
         </h3>
 
     </div>

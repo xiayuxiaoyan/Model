@@ -30,6 +30,16 @@ body{
     display: block;
     float: left;
 }
+.login a{
+    color: #ffffff;
+    font-family: "Microsoft YaHei";
+    text-shadow: 1px 1px 5px  #000000;
+    margin-top: 35px;
+    margin-left: 270px;
+    display: block;
+    position: fixed;
+    font-size: 13px;}
+
 ul{ text-decoration: none;
     list-style: none;
     height: 60px;
@@ -65,6 +75,90 @@ li{
     background-color: rgba(0,0,0,0.5);
 
 }
+.loginDiv{
+
+    width: 24%;
+    height:420px;
+    background-color: rgba(0,0,0,0.4);
+    -webkit-box-shadow: 1px 1px 10px 2px black;
+    margin:  12% 38%;
+    position: absolute;
+    display: none;
+}
+.loginDiv img{
+    margin: 20px auto;
+    display: block;}
+
+input::-webkit-input-placeholder {
+    color: #6c6c6c;
+    -webkit-transition: color.5s;
+}
+input:focus::-webkit-input-placeholder, input:hover::-webkit-input-placeholder {
+    color: #a3a3a3;
+    -webkit-transition: color.5s;
+
+}
+
+
+.loginDiv.loginLogo{
+    margin-bottom: 80px;
+}
+.userInput input{
+    height: 30px;
+    width: 180px;
+    border-color: #000000;
+    margin: 40px auto;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.6);
+
+
+
+}
+.loginButton{
+    margin: 0 auto;
+    width: 200px;
+    display: block;
+}
+
+
+
+
+.loginButton input {
+    height: 30px;
+    width: 80px;
+    border-color: #000000;
+    display: block;
+    float: left;
+    margin: 0 10px;
+    font-family:"Microsoft YaHei";
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.6);
+
+
+
+}
+.loginButton input:hover{
+    background-color: rgba(98, 98, 98, 0.60);
+
+}
+.signUpDiv{
+
+    width: 24%;
+    height:500px;
+    background-color: rgba(0,0,0,0.4);
+    -webkit-box-shadow: 1px 1px 10px 2px black;
+    margin:  10% 38%;
+    position: absolute;
+    display: none;
+}
+.signUpDiv img {
+    margin: 20px auto;
+    display: block;
+}
+.signUpDiv.loginButton input{
+    margin-left: 50px;
+}
+
 
 .about{
     width: 33.3%;

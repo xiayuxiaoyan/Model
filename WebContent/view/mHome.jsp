@@ -22,7 +22,7 @@
 	<ul>
 <!-- 		<li><a href="#" target="iframe">首页</a></li> -->
 		<li><a id="#managerPerson" class="nav" href="MP_searchPersonList.jsp" target="iframe">人员管理</a></li>
-		<li><a id="#managerNews" class="nav" href="MN_launchNews.html" target="iframe">新闻管理</a></li>
+		<li><a id="#managerNews" class="nav" href="MN_launchNews.jsp" target="iframe">新闻管理</a></li>
 		<li><a id="#managerNewPerson"class="nav" href="userListUnAuth" target="iframe" >招新管理</a></li>
 		<li><a id="#managerSysterm" class="nav">系统</a></li>
 	</ul>
@@ -41,9 +41,9 @@
 	<div class="menuList" id="managerNews">
 		<ul>
 			<li>新闻管理</li>
-			<li><a href="MN_launchNews.html" target="iframe">发布新闻</a></li>
+			<li><a href="MN_launchNews.jsp" target="iframe">发布新闻</a></li>
 
-			<li><a href="MN_searchNews.html" class="menuListA"target="iframe">查看新闻</a></li>
+			<li><a href="MN_searchNews.jsp" class="menuListA"target="iframe">查看新闻</a></li>
 
 
 		</ul>

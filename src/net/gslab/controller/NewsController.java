@@ -51,6 +51,14 @@ public class NewsController extends BaseController{
 		newsService.save(news);
 	}
 	
+	//从后台添加新闻
+	//@RequestMapping("/addNews",method=RequestMethod.POST)
+	//public boolean addNews()
+	//{
+		
+		
+	//}
+	
 	//分页例子，
        @RequestMapping(value = "/getPage", method = RequestMethod.GET)
 	   public @ResponseBody List<News>  list(HttpServletRequest request,
