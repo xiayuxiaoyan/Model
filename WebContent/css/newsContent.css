@@ -48,8 +48,11 @@
 	color:#FEFCFC;
 	font-size:18px !important;
 	font-family:'myfont2';
+	padding-left:500px;
 }
-
+.publicName{
+	margin-left:40px;
+}
 .content
 {
 	width:auto;

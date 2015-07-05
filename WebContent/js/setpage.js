@@ -94,12 +94,29 @@ function reloadpage(target)
                 var jsonStr=xmlhttp.responseText;
                 newsArray=JSON.parse(jsonStr);
                 for(var i=0;i<newsArray.length-1;i++){
-                  newsList+="<p class='item'><a href='' class='nlTitle newsDetail'>"+newsArray[i].newsName+"</a<a href='' class='date'>"+newsArray[i].publishDate+"</a></p>"
+                  newsList+="<p class='item'><a href='' class='nlTitle newsDetail' id='"+newsArray[i].newsId+"'>"+newsArray[i].newsName+"</a<a href='' class='date'>"+newsArray[i].publishDate+"</a></p>"
                  }
                 $(".container").prepend(newsList);
                 if(newsArray)
                     totalpage =Math.ceil(newsArray[newsArray.length-1]/pagesize);  
                 setpage();
+                $(".newsDetail").on("click",function(){  //查看新闻具体内容
+                	firstWidth = $(".news").width();
+                	secondWidth =$(".newsList").width();
+                	//newsName=$(this).text();
+                 	$("body").animate({
+                 	 scrollLeft:(firstWidth+secondWidth+15)  //让body的scrollTop等于pos的top，就实现了滚动
+                 	 },500);
+                    /*****************************ajax获取新闻内容****************************************/
+                    var newsId=$(this).attr("id");
+                    //loadNewsContent(newsId);
+
+                 	$("body").css("overflow-y","hidden");//隐藏导航条
+                	$(".shadow .button").click(function () {	//返回首页显示滚动条
+                		$("body").css("overflow-y","auto");
+                	});
+                    return false;
+                 });
              }
         });
  }  

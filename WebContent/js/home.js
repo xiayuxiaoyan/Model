@@ -1,102 +1,3 @@
-/*
-var groupName;         //组名
- 
-$(document).ready(function(){
-
-function createRequest(){  //创建ajax请求
-	var request;
-	if(window.XMLHttpRequest){
-		request = new XMLHttpRequest();
-		return request;
-	}else{
-		request = new ActiveXObject("Microsoft.XMLHTTP");
-		return request;
-	}
-}
-function loadImage (urlArray) {   //异步加载图片
-	var imgArrays = document.getElementsByClassName("memberPhoto");
-	var personNames=document.getElementsByClassName("nameStyle");
-	for (var i = 0; i<urlArray.length; i++) {
-		imgArrays[i].onload=function(){
-			imgArrays[i].onload=null;	
-		}	
-		imgArrays[i].src=urlArray[i].imgUrl;//图片对象地址
-		personNames[i].innerText=urlArray[i].memberName;
-	}
-
-}
-
-function sendRequest(){
-	                       //发送请求  动态加载组员图片列表  分页
-	var request ; //ajax请求
- 	request = createRequest();
- 	request.onreadystatechange=function(){
- 		if(request.readyState==4){
- 			if((request.status>=200&&request.status<=300)||request.status==304){
- 				//alert("请求成功");
- 				var jsonStr=request.responseText;
- 				var imgArray=JSON.parse(jsonStr);
- 				loadImage (imgArray) ; //预加载图片并显示
-
- 			}else{
- 				alert("2请求失败");
- 			}
- 		}
- 	}
-	//var url="about?"+encodeURIComponent("groupName=")+encodeURIComponent(groupName);  //编辑url
- 	var url="about?groupName="+groupName;
- 	request.open("get",url,true);
- 	request.send(null);
-
-}
-
-//上下滑动效果
-$(".shadow .button").click(function () {	//上下滑动效果
-	var d=$(this).attr("href");
-    var scroll_offset = $(d).offset();  //得到pos这个div层的offset，包含两个值，top和left
-
- 	$("body").animate({
- 	 scrollTop:scroll_offset.top  //让body的scrollTop等于pos的top，就实现了滚动
- 	 },500);
-});
-
-
-$(".photoLink").click(function(){  
-
-	groupName = $(this).attr("id"); 
-	var $groupImg=$(".groupName");
-	var url="images/"+ groupName +".png";
-	$groupImg.attr("src",url);
-
-	var firstWidth=$(".about").width(); 
-	var secondWidth=$(".group").width();
- 	$("body").animate({
- 	 scrollLeft:firstWidth  //让body的scrollTop等于pos的top，就实现了滚动
- 	 },500);
-
-	$("body").css("overflow-y","hidden");//隐藏导航条
-	$(".shadow .button").click(function () {	//返回首页显示滚动条
-		$("body").css("overflow-y","auto");
-	});
-
-
-	sendRequest();
-	return false;
-
-});
-
-
-
-
-});*/
-
-
-
-
-
-
-
-/*****************************************新的*********************************/
 
 /*function click_scroll() {
 	var scroll_offset=document.getElementById("about").offsetTop;
@@ -153,7 +54,7 @@ var scrollFunc = function (e) {
         		window.location.hash=blockIdArray[i+1];
         	}
         }
-        } else if (e.detail) {  //Firefox滑轮事件
+    } else if (e.detail) {  //Firefox滑轮事件
             if (e.detail> 0) { //当滑轮向上滚动时
                 // alert("滑轮上滚"+e.detail);
             }
@@ -161,7 +62,11 @@ var scrollFunc = function (e) {
                 // alert("滑轮虾滚"+e.detail);
             }
         }
+    if(e.preventDefault){
+        e.preventDefault();
+    }
         // ScrollText(direct);
+        return false;
 }
     //给页面绑定滑轮滚动事件
     if (document.addEventListener) {
@@ -223,27 +128,47 @@ function loadImgList(groupName) //发送请求  动态加载组员图片列表  
             var fnewsNameList="";
             var fnewsDateList="";
             for(var i=0;i<num;i++){
-                fnewsNameList +="<a class='newsDetail' href=''>"+newsArray[i].newsName+"</a><br>";
+                fnewsNameList +="<a class='newsDetail' href=''id ='"+newsArray[i].newsId+"'>"+newsArray[i].newsName+"</a><br>";
                 fnewsDateList +=newsArray[i].publishDate+"<br>";
             }
             $(".leftContent p").append(fnewsNameList);
             $(".rightContent p").append(fnewsDateList);
+            $(".newsDetail").on("click",function(){  //查看新闻具体内容
+            	firstWidth = $(".news").width();
+            	secondWidth =$(".newsList").width();
+            	//newsName=$(this).text();
+             	$("body").animate({
+             	 scrollLeft:(firstWidth+secondWidth+15)  //让body的scrollTop等于pos的top，就实现了滚动
+             	 },500);
+                /*****************************ajax获取新闻内容****************************************/
+                var newsId=$(this).attr("id");
+                //loadNewsContent(newsId);
+
+             	$("body").css("overflow-y","hidden");//隐藏导航条
+            	$(".shadow .button").click(function () {	//返回首页显示滚动条
+            		$("body").css("overflow-y","auto");
+            	});
+                return false;
+             });
                 
              }
         });
  } 
 
 
-function loadNewsContent(newsName) //请求新闻内容
+function loadNewsContent(newsId) //请求新闻内容
    {
-     loadXMLDoc("news_content?"+encodeURIComponent("newsName=")+encodeURIComponent(newsName),function()
+     loadXMLDoc("news_content?"+encodeURIComponent("newsId=")+encodeURIComponent(newsId),function()
         {
           if (xmlhttp.readyState==4 && xmlhttp.status==200)
-             {
+             {  
+        	    $(".publicName").remove();
                 var jsonStr=xmlhttp.responseText;
                 var newsDetail=JSON.parse(jsonStr);
                 $(".newsName").text(newsDetail.newsName);
-                $(".ncDate").text(newsDetail.publishDate);
+                $(".ncDate").text("发布时间："+newsDetail.publishDate);
+                var publishName="<em class='publicName'>发布人："+newsDetail.publishName;
+                $(".ncDate").append(publishName);
                 $(".article").append(newsDetail[content]);///////////////待更改
                 
              }
@@ -336,24 +261,25 @@ $(".more").click(function(){		//查看更多条新闻
 
 
 
-$(".newsDetail").click(function(){  //查看新闻具体内容
+//$(".newsDetail").on("click",".newsDetail",function(){  //查看新闻具体内容
+/*$(".newsDetail").on("click",function(){  //查看新闻具体内容
 	firstWidth = $(".news").width();
 	secondWidth =$(".newsList").width();
-	newsName=$(this).text();
+	//newsName=$(this).text();
  	$("body").animate({
  	 scrollLeft:(firstWidth+secondWidth+15)  //让body的scrollTop等于pos的top，就实现了滚动
  	 },500);
-    /*****************************ajax获取新闻内容****************************************/
-    var newsName=$(this).text();
-    
-  // /  loadNewsContent(newsName);??????????????????????????
+    ///////////////////////////ajax获取新闻内容/////////////////////////////////////////////
+    var newsId=$(this).attr("id");
+    alert(newsId);
+    //loadNewsContent(newsId);
 
  	$("body").css("overflow-y","hidden");//隐藏导航条
 	$(".shadow .button").click(function () {	//返回首页显示滚动条
 		$("body").css("overflow-y","auto");
 	});
     return false;
- });
+ });*/
 
  /******************************返回按钮来回滚动**************************/
  $(".pic1").click(function(){       

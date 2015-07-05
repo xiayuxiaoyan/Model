@@ -17,8 +17,9 @@
     <link href="css/textEditor/jHtmlArea.ColorPickerMenu.css" rel="stylesheet" type="text/css"/>
     <link  rel="stylesheet" type="text/css" href="css/MN_launchNews.css"/>
     
+ <body>   
+    <form id="lanuch_News" action="/Model/view/addNews" class="addNews" method="post">
     <div>
-    <form id="lanuch_News" action="/userRegister" method="post">
         <h3>&nbsp所属分类： &nbsp&nbsp &nbsp&nbsp
         <select style="width: 200px;font-size:18px" name="catagory">
         <option>新闻</option>
@@ -76,7 +77,7 @@
 
 
 </head>
-<body>
+
 
 </body>
 </html>

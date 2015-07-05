@@ -3,6 +3,9 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.sql.Timestamp;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -46,18 +49,47 @@ public class NewsController extends BaseController{
 		news.setPublishDate(strDate);
 		news.setPublishName("关振宇");
 		//该外键不存在会报错：Cannot add or update a child row: a foreign key constraint fails (`model`.`t_news`, CONSTRAINT `newsPublisher` FOREIGN KEY (`publishName`) REFERENCES `t_user` (`userName`))
-
 		
 		newsService.save(news);
 	}
 	
 	//从后台添加新闻
-	//@RequestMapping("/addNews",method=RequestMethod.POST)
-	//public boolean addNews()
-	//{
+	@RequestMapping(value="/addNews",method=RequestMethod.POST)
+	public String addNews2(String newsName,String publishName,String content)
+	{
+		News news=new News();
+		//进行格式判断,先判断是否为空
+		if(newsName.isEmpty()||publishName.isEmpty()||content.isEmpty())
+		{
+			//System.out.print("发布新闻失败，新闻标题、新闻内容和发布者姓名不能为空！");
+			return "发布新闻失败，新闻标题、新闻内容和发布者姓名不能为空！";
+		}
 		
+		// ? 应该进行判断:member中是否存在名字是publishName的人，但是这里暂时没写;  
 		
-	//}
+		//获取当前时间
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time=df.format(new Date()).toString();
+		System.out.print("发布此新闻的时间："+time);	
+		
+		//给News赋值
+		news.setContent(content);
+		news.setNewsName(newsName);
+		news.setPublishName(publishName);
+		news.setPublishDate(time);
+		
+		//获取当前新闻的总数目，加1后，给news.NewsId赋值,然后发布新闻
+		if(news!=null)
+		{
+			int id= newsService.listNews().size()+1;
+			news.setNewsId(id);
+			newsService.save(news);
+			//System.out.print("新闻发布成功！");	
+			return "新闻发布成功！";
+		}
+		//System.out.print("新闻发布失败！");
+		return "新闻发布失败";
+	}
 	
 	//分页例子，
        @RequestMapping(value = "/getPage", method = RequestMethod.GET)
@@ -108,9 +140,6 @@ public class NewsController extends BaseController{
     	   
        }
        
-       
-       
-       
      //分页，返回首页显示的9条最新新闻
        @RequestMapping(value = "/get9Page", method = RequestMethod.GET)
 	   public @ResponseBody List<News>  list2(HttpServletRequest request,
@@ -135,8 +164,6 @@ public class NewsController extends BaseController{
 		
 	}
        
-       
-       
     //删除新闻,前台传入ID，根据ID删除新闻，删除后，检验是否删除成功
    	@RequestMapping("/deleteByID")
    	public void delNews(int id){
@@ -153,18 +180,14 @@ public class NewsController extends BaseController{
 		model.addAttribute("news",news);   //等效于request和respond
 		return news;
 	}
-	
 
 	//根据新闻id，获得数据库中的新闻
 	@RequestMapping(value ="/getByID",method = RequestMethod.GET)
 	public @ResponseBody News getByID(HttpServletRequest request,
 			HttpServletResponse response,@RequestParam(value="id")Integer id)//id是指新闻id，
-	
 	{
 		System.out.println(id);
 		return newsService.getByID(id);
 	}
-	
-	
 	
 }

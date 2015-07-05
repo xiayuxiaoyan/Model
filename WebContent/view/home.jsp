@@ -270,7 +270,7 @@ function hideSignUp() {
         <div class="newscontainer">
             <h2 class="newsName">关于2015届本科生毕业论文检测的通知</h2>
             <div class="content">
-                <p class="ncDate">2015年05月14日 </p>
+                <p class="ncDate">发布时间：2015年05月14日 <em class="publicName">发布人：xxx</em></p>
                 <pre class="article">
 根据校教务处《关于2015届本科毕业设计（论文）检测工作的通知》要求，我校继续使用“‘中国知网’大学生论文抄袭检测系统”对2015届毕业论文进行检测，现将有关事项通知如下：
  
