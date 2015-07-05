@@ -142,7 +142,7 @@ function loadImgList(groupName) //发送请求  动态加载组员图片列表  
              	 },500);
                 /*****************************ajax获取新闻内容****************************************/
                 var newsId=$(this).attr("id");
-                //loadNewsContent(newsId);
+                loadNewsContent(newsId);
 
              	$("body").css("overflow-y","hidden");//隐藏导航条
             	$(".shadow .button").click(function () {	//返回首页显示滚动条
@@ -158,7 +158,7 @@ function loadImgList(groupName) //发送请求  动态加载组员图片列表  
 
 function loadNewsContent(newsId) //请求新闻内容
    {
-     loadXMLDoc("news_content?"+encodeURIComponent("newsId=")+encodeURIComponent(newsId),function()
+     loadXMLDoc("getByID?"+"id="+newsId,function()
         {
           if (xmlhttp.readyState==4 && xmlhttp.status==200)
              {  
@@ -169,7 +169,7 @@ function loadNewsContent(newsId) //请求新闻内容
                 $(".ncDate").text("发布时间："+newsDetail.publishDate);
                 var publishName="<em class='publicName'>发布人："+newsDetail.publishName;
                 $(".ncDate").append(publishName);
-                $(".article").append(newsDetail[content]);///////////////待更改
+                $(".article").text(newsDetail.content);///////////////待更改
                 
              }
         });
