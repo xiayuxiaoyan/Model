@@ -83,6 +83,25 @@ function loadXMLDoc(url,cfunc)
    xmlhttp.open("GET",url,true);
    xmlhttp.send(null);
 }
+function loadNewsContent(newsId) //请求新闻内容
+{
+  loadXMLDoc("getByID?"+"id="+newsId,function()
+     {
+       if (xmlhttp.readyState==4 && xmlhttp.status==200)
+          {  
+     	    $(".publicName").remove();
+             var jsonStr=xmlhttp.responseText;
+             var newsDetail=JSON.parse(jsonStr);
+             $(".newsName").text(newsDetail.newsName);
+             $(".ncDate").text("发布时间："+newsDetail.publishDate);
+             var publishName="<em class='publicName'>发布人："+newsDetail.publishName;
+             $(".ncDate").append(publishName);
+             $(".article").text(newsDetail.content);///////////////待更改
+             
+          }
+     });
+} 
+
 function reloadpage(target)
    {
 	 var newsArray;
@@ -109,7 +128,7 @@ function reloadpage(target)
                  	 },500);
                     /*****************************ajax获取新闻内容****************************************/
                     var newsId=$(this).attr("id");
-                    //loadNewsContent(newsId);
+                    loadNewsContent(newsId);
 
                  	$("body").css("overflow-y","hidden");//隐藏导航条
                 	$(".shadow .button").click(function () {	//返回首页显示滚动条
