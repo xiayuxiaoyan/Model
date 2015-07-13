@@ -1,17 +1,4 @@
 
-/*function click_scroll() {
-	var scroll_offset=document.getElementById("about").offsetTop;
-  //var scroll_offset = $("#about").offset();  //得到pos这个div层的offset，包含两个值，top和left
- 	// b=document.getElementsByTagName("body");
- 	// h=document.getElementsByTagName("html");
- 	// b.style.transform="translate(0px,scroll_offset+'px')";
- 	// b.scrollTop=scroll_offset;
-
- 	$("body").animate({
- 	 scrollTop:scroll_offset  //让body的scrollTop等于pos的top，就实现了滚动
- 	 },500);
- }*/
-
 var imgArray ;   //取得的user对象  
 var newsName;	//新闻名字
 var firstWidth ; 
@@ -273,7 +260,6 @@ $(".more").click(function(){		//查看更多条新闻
     var newsId=$(this).attr("id");
     alert(newsId);
     //loadNewsContent(newsId);
-
  	$("body").css("overflow-y","hidden");//隐藏导航条
 	$(".shadow .button").click(function () {	//返回首页显示滚动条
 		$("body").css("overflow-y","auto");

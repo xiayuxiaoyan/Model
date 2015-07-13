@@ -1,4 +1,4 @@
-/* var totalpage,pagesize,cpage,count,curcount,outstr; 
+/*var totalpage,pagesize,cpage,count,curcount,outstr; 
 //初始化 
 cpage = 1; 
 totalpage = 0; 

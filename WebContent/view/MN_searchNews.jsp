@@ -6,12 +6,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>高思实验室首页</title>
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <link  rel="stylesheet" type="text/css" href="css/setpage.css">
-    <link  rel="stylesheet" type="text/css" href="css/MN_searchNews.css">
+    <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+    <link  rel="stylesheet" type="text/css" href="../css/setpage.css">
+    <link  rel="stylesheet" type="text/css" href="../css/MN_searchNews.css">
+    <script type="text/javascript" src="../mHome.js"></script>
 <body>
 <script type="text/javascript">
-    var checkboxs=document.getElementsByClassName("checkbox");
+   /*  var checkboxs=document.getElementsByClassName("checkbox");
     var newsId;
     for(var i=0;i<checkboxs.length;i++){
         if(checkboxs[i].checked){
@@ -31,28 +32,11 @@
                 }
                 $("table").prepend(item);
              }
-        });
+        }); */
 </script>
-<div>
-    <button onclick="delPerson()"  >删除</button>
-<!--     <button >添加</button> -->
-    <button >启用</button>
-    <button >禁用</button>
-<!--     <select>
-    <option>每页显示</option>
-    <option>每页显示10页</option>
-    <option>每页显示20页</option>
-    <option>每页显示50页</option>
-    </select> -->
-    <input>
-    <button type="submit">搜索</button>
 
-</div>
 <table class="tb" border="1"  cellpadding="10" cellspacing="0">
         <tr>
-            <th class="check">
-               选择
-            </th>
             <th>
                id
             </th>
@@ -68,29 +52,18 @@
             </th>
         </tr>
         <br/>
-<tr><td><input type="checkbox" name="ids" value="3990" class="checkbox"/></td><td> 1</td><td> 第一天</td><td> 2015-01-01 11：22：22</td><td><a href="">修改</a></td></tr>
+<tr><td> 1</td><td> 第一天</td><td> 2015-01-01 11：22：22</td><td><a href="">[查看]</a><a href="">[删除]</a></td></tr>
 
     </table>
 <br/><br/><br/><br/><br/>
-<div id="setpage">
-<!--     &nbsp&nbsp
-    &nbsp&nbsp
-    &nbsp&nbsp
-    &nbsp&nbsp
-    <a href="">&lt;</a>
-    <a href="">1</a>
-    <a href="">2</a>
-    <a href="">3</a>
-    <a href="">...</a>
-    <a href="">122</a>
-    <a href="">123</a>
-    <a href="">&gt;</a> -->
-
-
-
-</div>
-<script type="text/javascript"src="js/setpage.js"></script>
+<div id="setpage"> </div>
 <script type="text/javascript">
+var totalpage,pagesize,cpage,count,curcount,outstr; 
+//初始化 
+cpage = 1; 
+totalpage = 0; 
+pagesize = 12; 
+outstr = ""; 
 var news;
     function reloadpage(target)//target第几页
    {
@@ -98,18 +71,21 @@ var news;
         {
           if (xmlhttp.readyState==4 && xmlhttp.status==200)
              {
-                var item;
+                var item="";
                 var jsonStr=xmlhttp.responseText;
                 news=JSON.parse(jsonStr);
                 for(var i=0;i<user.length;i++){
-                    item+="<tr><td><input type='checkbox' name='ids' value='3990'class="checkbox" /></td><td>"+news[i].newsId+"</td><td>" +news[i].newsName+"</td><td> "+news[i].publishName+"</td><td><a href=''>修改</a></td></tr>"
+                    item+="<tr><td><input type='checkbox' name='ids' value='3990'class='checkbox' /></td><td>"+news[i].newsId+"</td><td>" +news[i].newsName+"</td><td> "+news[i].publishName+"</td><td><a href=''>修改</a></td></tr>"
                 }
                 $("table").prepend(item);
              }
         });
    }
-
-setpage(); 
+ 
+</script>
+<script type="text/javascript"src="../js/setpage.js"></script>
+<script type="text/javascript">
+setpage();
 </script>
 </body>
 </head>

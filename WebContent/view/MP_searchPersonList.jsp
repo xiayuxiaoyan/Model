@@ -11,17 +11,18 @@
     <link  rel="stylesheet" type="text/css" href="../css/setpage.css">
     <link  rel="stylesheet" type="text/css" href="../css/MP_searchPersonList.css">
     <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+    </head>
 <body>
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		$.get("/Model/member/findAllmember",{},function(result){
+/* 		$.get("/Model/member/findAllmember",{},function(result){
 			var table="";
 			for(var i=0;i<result.length;i++){
 			  table+="<tr><td><input type=\"checkbox\" name=\"ids\" value=\"3990\" class=\"checkbox\" /></td><td>"+result[i].memberId+"</td><td>"+result[i].memberName+"</td><td>"+result[i].category+"</td><td>"+result[i].email+"</td><td>"+result[i].birthDate+"</td><td>已启用</td><td><a href=\"MP_PersonDetails.jsp?id="+result[i].memberId+"\">[查看]</a></td></tr>";
 			}
 			$(".tb").append(table);
-		},"json");
+		},"json"); */
 	});
 
 function delPerson(){
@@ -45,26 +46,9 @@ function delPerson(){
 		},"json");
 }
 </script>
-<div>
-    <button onclick="delPerson()" >删除</button>
-<!--     <button >添加</button> -->
-    <button >启用</button>
-    <button >禁用</button>
-  <!--     <select>
-    <option>每页显示</option>
-    <option>每页显示10页</option>
-    <option>每页显示20页</option>
-    <option>每页显示30页</option>
-    </select> -->
-    <input >
-    <button type="submit">搜索</button>
 
-</div>
-<table class="tb" border="1"  cellpadding="10" cellspacing="0">
+<table class="tb tableContent" border="1"  cellpadding="10" cellspacing="0">
         <tr>
-            <th class="check">
-               选择
-            </th>
             <th>
                 学号
             </th>
@@ -86,14 +70,11 @@ function delPerson(){
             <th>
                 操作
             </th>
-        </tr>
-        <br/>
-       
-
+        </tr>     
 
     </table>
 <br/>
-    <div id="setpage">
+    <div id="page">
 <!--         &nbsp&nbsp&nbsp&nbsp&nbsp
         <a href="">首页</a>&nbsp
         <a href="">上一页</a>
@@ -111,30 +92,55 @@ function delPerson(){
         </select> -->
     </div>
 
-<script type="text/javascript"src="../js/setpage.js"></script>
+<script type="text/javascript"src="../js/mHome.js"></script>
 <script type="text/javascript">
 var users;
-    function reloadpage(target)//target第几页
+var item="";
+var  pagesize = 12; 
+    function reloadPagePersonList(target)//target第几页
    {
-     loadXMLDoc("url?page="+target,function()
+     loadXMLDoc("/Model/member/findAllmember?page="+target,function()
         {
-          if (xmlhttp.readyState==4 && xmlhttp.status==200)
-             {
-                var item;
+          if (xmlhttp.readyState==4 && xmlhttp.status==200){
                 var jsonStr=xmlhttp.responseText;
                 users=JSON.parse(jsonStr);
-                for(var i=0;i<user.length;i++){
-                    item+="<tr><td><input type='checkbox' name='ids' value='3990'class=\"checkbox\"/></td><td>"+users[i].studentId+"</td><td>"+users[i].userName+"</td><td>"+users[i].groupName+"</td><td>"+users[i].email+"</td><td>"+users[i].createDate+"</td>td>已启用</td><td><a href='MP_PersonDetails.html'>[查看]</a></td></tr>"
+                $(".remove").remove();
+                //$("table").remove(item);
+                for(var i=0;i<users.length;i++){
+                    item+="<tr class='remove'><td>"+users[i].memberId+"</td><td>"+users[i].memberName+"</td><td>"+users[i].category+"</td><td>"+users[i].email+"</td><td>"+users[i].birthDate+"</td><td>已启用</td><td><a class='personDetails' href=''>[查看]</a><a href='' class='removePerson'>[删除]</a></td></tr>"
                 }
-                $("table").prepend(item);
-             }
+                $(".tableContent").append(item);
+                item="";
+                if(users)
+                    //totalpage =Math.ceil(users[users.length-1]/pagesize); 
+                	totalpage=56;//??????????????????????????????????????????????后台传回一定条病和总条数
+                setpage();
+                $(".personDetails").click(function(event){
+                	var $personTrs=$(this).parent().parent().children();
+                	var $personTr=$personTrs.eq(0).text();
+                	location.href="/Model/view/MP_PersonDetails.jsp";
+                	event.preventDefault();
+                	return false;
+                });
+                $(".removePerson").on("click",function(event){
+                	alert(a);
+                	event.preventDefault();
+                	return false;
+                });
+          }
         });
    }
-
-setpage(); 
-
+    
+    function gotopage(target) 
+    {     
+        cpage = target;        //把页面计数定位到第几页 
+        $(".item").remove();
+        setpage(); 
+        reloadPagePersonList(target);    //调用显示页面函数显示第几页,这个功能是用在页面内容用ajax载入的情况 
+    } 
+    reloadPagePersonList(1); 
 </script>
 
 </body>
-</head>
+
 </html>
