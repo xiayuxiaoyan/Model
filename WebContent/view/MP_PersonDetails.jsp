@@ -33,8 +33,7 @@
   </div><!--end of addperson-->
   <script src="../js/mHome.js"></script>
   <script>
-  function loadNewsList(num) //请求个人详细信息
-  {
+
     loadXMLDoc("/Model/member/findOne",function()
        {
          if (xmlhttp.readyState==4 && xmlhttp.status==200)
@@ -51,7 +50,7 @@
             }
                          
        });
-} 
+
   </script>
 
 </body>
