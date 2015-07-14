@@ -15,14 +15,14 @@
 <body>
 <script type="text/javascript">
 	
-	$(document).ready(function(){
-/* 		$.get("/Model/member/findAllmember",{},function(result){
+/*	$(document).ready(function(){
+ 		$.get("/Model/member/findAllmember",{},function(result){
 			var table="";
 			for(var i=0;i<result.length;i++){
 			  table+="<tr><td><input type=\"checkbox\" name=\"ids\" value=\"3990\" class=\"checkbox\" /></td><td>"+result[i].memberId+"</td><td>"+result[i].memberName+"</td><td>"+result[i].category+"</td><td>"+result[i].email+"</td><td>"+result[i].birthDate+"</td><td>已启用</td><td><a href=\"MP_PersonDetails.jsp?id="+result[i].memberId+"\">[查看]</a></td></tr>";
 			}
 			$(".tb").append(table);
-		},"json"); */
+		},"json"); 
 	});
 
 function delPerson(){
@@ -44,7 +44,7 @@ function delPerson(){
 			alert("删除失败");
 		}	
 		},"json");
-}
+}*/
 </script>
 
 <table class="tb tableContent" border="1"  cellpadding="10" cellspacing="0">
@@ -117,13 +117,23 @@ var  pagesize = 12;
                 setpage();
                 $(".personDetails").click(function(event){
                 	var $personTrs=$(this).parent().parent().children();
-                	var $personTr=$personTrs.eq(0).text();
-                	location.href="/Model/view/MP_PersonDetails.jsp";
+                	var $personId=$personTrs.eq(0).text();
+                	loadXMLDoc("url?personId="+$personId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        	location.href="/Model/view/MP_personDetails.jsp";	
+                		}
+                	})
                 	event.preventDefault();
                 	return false;
                 });
                 $(".removePerson").on("click",function(event){
-                	alert(a);
+                   	var $personTrs=$(this).parent().parent().children();
+                	var $personId=$personTrs.eq(0).text();
+                	loadXMLDoc("url?removePersonId="+$personId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        	alert("已删除，请刷新！");	
+                		}
+                	})
                 	event.preventDefault();
                 	return false;
                 });

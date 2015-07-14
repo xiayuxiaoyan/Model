@@ -56,9 +56,9 @@
 
     </table>
 <br/><br/><br/><br/><br/>
-<div id="setpage"> </div>
+<div id="page"> </div>
 <script type="text/javascript">
-var totalpage,pagesize,cpage,count,curcount,outstr; 
+/* var totalpage,pagesize,cpage,count,curcount,outstr; 
 //初始化 
 cpage = 1; 
 totalpage = 0; 
@@ -75,17 +75,71 @@ var news;
                 var jsonStr=xmlhttp.responseText;
                 news=JSON.parse(jsonStr);
                 for(var i=0;i<user.length;i++){
-                    item+="<tr><td><input type='checkbox' name='ids' value='3990'class='checkbox' /></td><td>"+news[i].newsId+"</td><td>" +news[i].newsName+"</td><td> "+news[i].publishName+"</td><td><a href=''>修改</a></td></tr>"
+                    item+="<tr><td>"+news[i].newsId+"</td><td>" +news[i].newsName+"</td><td> "+news[i].publishName+"</td><td><a href=''>修改</a></td></tr>"
                 }
                 $("table").prepend(item);
              }
         });
    }
- 
+  */
 </script>
-<script type="text/javascript"src="../js/setpage.js"></script>
+<script type="text/javascript"src="../js/mHome.js"></script>
 <script type="text/javascript">
-setpage();
+var  news;
+var item="";
+var  pagesize = 12; 
+    function reloadPageNews(target)//target第几页
+   {
+     loadXMLDoc("getPage?page="+target,function()
+        {
+          if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        	    var news="";
+                var jsonStr=xmlhttp.responseText;
+                news=JSON.parse(jsonStr);
+                $(".remove").remove();
+                //$("table").remove(item);
+                for(var i=0;i<news.length;i++){
+                	item+="<tr class='remove'><td>"+news[i].newsId+"</td><td>" +news[i].newsName+"</td><td> "+news[i].publishName+"</td><td><a href=''class='newsDetails'>[修改]</a><a href=''class='removeNews'>[删除]</a></td></tr>"
+                }
+                $(".tb").append(item);
+                item="";
+                if(news)
+                    totalpage =Math.ceil(news[ news.length-1]/pagesize); 
+                setpage();
+                $(".newsDetails").click(function(event){
+                	var $newsTrs=$(this).parent().parent().children();
+                	var $newsId=$personTrs.eq(0).text();
+                	loadXMLDoc("url?newsDetailId="+$newsId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        	location.href="/Model/view/MN_newsDetails.jsp";	
+                		}
+                	})                	
+                	event.preventDefault();
+                	return false;
+                });
+                $(".removeNews").on("click",function(event){
+                	var $newsTrs=$(this).parent().parent().children();
+                	var $newsId=$personTrs.eq(0).text();
+                	loadXMLDoc("url?removeNewsId="+$newsId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                			alert("已删除，请刷新查看！");
+                		}
+                	})
+                	event.preventDefault();
+                	return false;
+                });
+          }
+        });
+   }
+    
+    function gotopage(target) 
+    {     
+        cpage = target;        //把页面计数定位到第几页 
+        $(".item").remove();
+        setpage(); 
+        reloadPagePersonList(target);    //调用显示页面函数显示第几页,这个功能是用在页面内容用ajax载入的情况 
+    } 
+    reloadPagePersonList(1); 
 </script>
 </body>
 </head>

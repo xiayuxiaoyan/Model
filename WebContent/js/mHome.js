@@ -126,6 +126,5 @@ function loadXMLDoc(url,cfunc) //创建ajax对象
    xmlhttp.send(null);
 }
 
-var a=0;
 
 

@@ -37,7 +37,6 @@
   </div>   闭合buttonBlock--> 
   <table class="tableA" border="1" >
    <tr>
-    <th width="10%">选择</td>
     <th width="8%">年级</td>
     <th width="8%">姓名</td>
     <th width="10%">专业</td>
@@ -54,7 +53,7 @@
 
  
   <table class="tableB" border="1" >
-    <%
+<%--     <%
  	List<User> users = new ArrayList<User>();
  	users =(List<User>)request.getAttribute("users");
  	if(users!=null){
@@ -78,11 +77,11 @@
  	}
  
  
- %>
+ %> --%>
   </table>
   
 
-  <div class ="bottom" id="setpage">
+  <div class ="bottom" id="page">
 <!--       <a class="aa" href="http://www.baidu.com/">首页</a>
       <a class="aa" href="http://www.baidu.com/">上一页</a>
       <a class="aa" href="http://www.baidu.com/">下一页</a>
@@ -99,7 +98,7 @@
  </div><!--闭合MA_haveApplayed-->
  <script type="text/javascript"src="../js/setpage.js"></script>
 <script type="text/javascript">
-var applays;
+/* var applays;
     function reloadpage(target)//target第几页
    {
      loadXMLDoc("url?page="+target,function()
@@ -110,14 +109,83 @@ var applays;
                 var jsonStr=xmlhttp.responseText;
                 applays=JSON.parse(jsonStr);
                 for(var i=0;i<applays.length;i++){
-                    item+="<tr class='tr'><td width='10%'><input type='checkbox' name='bike' /></td><td width='8%'>"+applays[i].grade+"</td><td width='8%'>"+applays[i].userName+"</td><td width='10%'>"+applays[i].major+"</td><td width='8%'>"+applays[i].groupName+"</td><td width='10%'>"+applays[i].email+"</td><td width='10%'>"+applays[i].mobilePhone+"</td><td width='12%'>"+applays[i].createDate+"</td><td width='8%'>未处理</td><td width='8%'><a href='http://www.baidu.com/'>"+applays[i].applayStatus+"</a></td></tr>"
+                    item+="<tr class='tr'><td width='8%'>"+applays[i].grade+"</td><td width='8%'>"+applays[i].userName+"</td><td width='10%'>"+applays[i].major+"</td><td width='8%'>"+applays[i].groupName+"</td><td width='10%'>"+applays[i].email+"</td><td width='10%'>"+applays[i].mobilePhone+"</td><td width='12%'>"+applays[i].createDate+"</td><td width='8%'>未处理</td><td width='8%'><a href='http://www.baidu.com/'>"+applays[i].applayStatus+"</a></td></tr>"
                 }
                 $(".tableB").prepend(item);
              }
         });
    }
 
-setpage(); 
+setpage();  */
+</script>
+
+<script type="text/javascript"src="../js/mHome.js"></script>
+<script type="text/javascript">
+var users;
+var item="";
+var  pagesize = 12; 
+    function reloadPagePersonList(target)//target第几页
+   {
+     loadXMLDoc("/Model/member/findAllmember?page="+target,function()
+        {
+          if (xmlhttp.readyState==4 && xmlhttp.status==200){
+              var item="";
+              var jsonStr=xmlhttp.responseText;
+              applays=JSON.parse(jsonStr);
+              $(".remove").remove();
+                for(var i=0;i<applays.length;i++){
+                    item+="<tr class='remove tr'id='"+applays[i].Id+"'><td width='8%'>"+applays[i].grade+"</td><td width='8%'>"+applays[i].userName+"</td><td width='10%'>"+applays[i].major+"</td><td width='8%'>"+applays[i].groupName+"</td><td width='10%'>"+applays[i].email+"</td><td width='10%'>"+applays[i].mobilePhone+"</td><td width='12%'>"+applays[i].createDate+"</td><td width='8%'>未处理</td><td width='8%'><a href=''class='applayDetails'>[查看 ]</a><a href=''class='failed'>[不通过]</a><a href=''class='pass'>[通过 ]</a></td></tr>"
+                }
+                $(".tableB").append(item);
+                item="";
+                if(users)
+                   totalpage =Math.ceil(applays[applays.length-1]/pagesize); 
+                setpage();
+                $(".applayDetails").click(function(event){
+                	var $personTrs=$(this).parent().parent().children();
+                	var $personId=$personTrs.eq(0).attr("id");
+                	loadXMLDoc("url?personId="+$personId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        	location.href="/Model/view/MA_applayDetails.jsp";	
+                		}
+                	})
+                	event.preventDefault();
+                	return false;
+                });
+                $(".pass").on("click",function(event){
+                   	var $personTrs=$(this).parent().parent().children();
+                	var var $personId=$personTrs.eq(0).attr("id");
+                	loadXMLDoc("url?passId="+$personId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        	alert("已通过，请刷新！");	
+                		}
+                	})；
+                	event.preventDefault();
+                	return false;
+                });
+                $(".failed").on("click",function(event){
+                   	var $personTrs=$(this).parent().parent().children();
+                	var var $personId=$personTrs.eq(0).attr("id");
+                	loadXMLDoc("url?failedId="+$personId,function(){
+                		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        	alert("已未通过，请刷新！");	
+                		}
+                	})
+                	event.preventDefault();
+                	return false;
+                });
+          }
+        });
+   }
+    
+    function gotopage(target) 
+    {     
+        cpage = target;        //把页面计数定位到第几页 
+        $(".item").remove();
+        setpage(); 
+        reloadPagePersonList(target);    //调用显示页面函数显示第几页,这个功能是用在页面内容用ajax载入的情况 
+    } 
+    reloadPagePersonList(1); 
 </script>
 </body>
 </html>
